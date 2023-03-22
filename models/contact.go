@@ -78,3 +78,13 @@ func SearchFriend(userId uint) []UserBasic {
 	utils.DB.Where("id in ?", objIds).Find(&users)
 	return users
 }
+
+func SearchUserByGroupId(communityId uint) []uint {
+	contacts := make([]Contact, 0)
+	objIds := make([]uint, 0)
+	utils.DB.Where("target_id = ? and type=2", communityId).Find(&contacts)
+	for _, v := range contacts {
+		objIds = append(objIds, uint(v.OwnerId))
+	}
+	return objIds
+}

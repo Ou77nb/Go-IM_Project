@@ -5,6 +5,33 @@ info:
   title: IM_Project
   version: "1.0"
 paths:
+  /contact/createCommunity:
+    post:
+      parameters:
+      - description: 群主id
+        in: formData
+        name: ownerId
+        type: string
+      - description: 群名称
+        in: formData
+        name: name
+        type: string
+      - description: icon
+        in: formData
+        name: icon
+        type: string
+      - description: desc
+        in: formData
+        name: desc
+        type: string
+      responses:
+        "200":
+          description: code","message"}
+          schema:
+            type: string
+      summary: 创建新群
+      tags:
+      - 用户模块
   /ping:
     get:
       responses:

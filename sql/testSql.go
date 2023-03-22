@@ -18,7 +18,7 @@ func main() {
 	//if err2 != nil {
 	//	fmt.Print("db.AutoMigrate:", err2)
 	//}
-	db.AutoMigrate(&models.Message{})
-	db.AutoMigrate(&models.GroupBasic{})
-	db.AutoMigrate(&models.Contact{})
+	//db.AutoMigrate(&models.Message{})
+	db.AutoMigrate(&models.Community{})
+	//db.AutoMigrate(&models.Contact{})
 }

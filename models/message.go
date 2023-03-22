@@ -194,6 +194,8 @@ func dispatch(data []byte) {
 	case 1: //私信
 		fmt.Println("dispatch  data :", string(data))
 		sendMsg(msg.TargetId, data)
+	case 2: //群发
+		sendGroupMsg(msg.TargetId, data) //发送的群ID ，消息内容
 	}
 }
 
@@ -204,5 +206,17 @@ func sendMsg(userId int64, msg []byte) {
 	rwLocker.RUnlock()
 	if ok {
 		node.DataQueue <- msg
+	}
+}
+
+func sendGroupMsg(targetId int64, msg []byte) {
+	fmt.Println("开始群发消息")
+	userIds := SearchUserByGroupId(uint(targetId))
+	for i := 0; i < len(userIds); i++ {
+		//排除给自己的
+		if targetId != int64(userIds[i]) {
+			sendMsg(int64(userIds[i]), msg)
+		}
+
 	}
 }

@@ -32,6 +32,7 @@ func Router() *gin.Engine {
 	r.POST("/user/updateUser", service.UpdateUser)
 	r.POST("/user/findUserByNameAndPwd", service.FindUserByNameAndPwd)
 	r.GET("/user/getUserList", service.GetUserList)
+	r.POST("/user/find", service.FindByID)
 	//发送消息
 	r.GET("/user/sendMsg", service.SendMsg)
 	//发送消息
@@ -40,6 +41,12 @@ func Router() *gin.Engine {
 	r.POST("/contact/addfriend", service.AddFriend)
 	//好友列表
 	r.POST("/searchFriends", service.SearchFriends)
+	//创建群
+	r.POST("/contact/createCommunity", service.CreateCommunity)
+	//群列表
+	r.POST("/contact/loadcommunity", service.LoadCommunity)
+	//添加群
+	r.POST("/contact/joinGroup", service.JoinGroups)
 	//前端发过来的消息再receProc里面处理
 	//r.POST("/user/redisMsg", service.RedisMsg)
 	return r

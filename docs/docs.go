@@ -15,6 +15,48 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/contact/createCommunity": {
+            "post": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "创建新群",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "群主id",
+                        "name": "ownerId",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "群名称",
+                        "name": "name",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "icon",
+                        "name": "icon",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "desc",
+                        "name": "desc",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\",\"message\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/ping": {
             "get": {
                 "tags": [
