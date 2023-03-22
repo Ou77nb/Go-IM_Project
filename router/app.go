@@ -24,6 +24,8 @@ func Router() *gin.Engine {
 	r.GET("/toChat", service.ToChat)
 	r.GET("/chat", service.Chat)
 
+	//上传文件
+	r.POST("/attach/upload", service.Upload)
 	//用户模块
 	r.POST("/user/createUser", service.CreateUser)
 	r.POST("/user/deleteUser", service.DeleteUser)
