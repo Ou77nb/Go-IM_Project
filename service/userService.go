@@ -234,17 +234,16 @@ func JoinGroups(c *gin.Context) {
 func FindByID(c *gin.Context) {
 	userId, _ := strconv.Atoi(c.Request.FormValue("userId"))
 
-	//	name := c.Request.FormValue("name")
 	data := models.FindByID(uint(userId))
 	utils.RespOK(c.Writer, data, "ok")
 }
 
-//func RedisMsg(c *gin.Context) {
-//	userIdA, _ := strconv.Atoi(c.PostForm("userIdA"))
-//	userIdB, _ := strconv.Atoi(c.PostForm("userIdB"))
-//	start, _ := strconv.Atoi(c.PostForm("start"))
-//	end, _ := strconv.Atoi(c.PostForm("end"))
-//	isRev, _ := strconv.ParseBool(c.PostForm("isRev"))
-//	res := models.RedisMsg(int64(userIdA), int64(userIdB), int64(start), int64(end), isRev)
-//	utils.RespOKList(c.Writer, "ok", res)
-//}
+func RedisMsg(c *gin.Context) {
+	userIdA, _ := strconv.Atoi(c.PostForm("userIdA"))
+	userIdB, _ := strconv.Atoi(c.PostForm("userIdB"))
+	start, _ := strconv.Atoi(c.PostForm("start"))
+	end, _ := strconv.Atoi(c.PostForm("end"))
+	isRev, _ := strconv.ParseBool(c.PostForm("isRev"))
+	res := models.RedisMsg(int64(userIdA), int64(userIdB), int64(start), int64(end), isRev)
+	utils.RespOKList(c.Writer, "ok", res)
+}

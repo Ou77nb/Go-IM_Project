@@ -26,6 +26,8 @@ func Router() *gin.Engine {
 
 	//上传文件
 	r.POST("/attach/upload", service.Upload)
+	//消息缓存
+	r.POST("/user/redisMsg", service.RedisMsg)
 	//用户模块
 	r.POST("/user/createUser", service.CreateUser)
 	r.POST("/user/deleteUser", service.DeleteUser)
