@@ -26,6 +26,8 @@ func Router() *gin.Engine {
 
 	//上传文件
 	r.POST("/attach/upload", service.Upload)
+	//消息缓存
+	r.POST("/user/redisMsg", service.RedisMsg)
 	//用户模块
 	r.POST("/user/createUser", service.CreateUser)
 	r.POST("/user/deleteUser", service.DeleteUser)
@@ -47,7 +49,5 @@ func Router() *gin.Engine {
 	r.POST("/contact/loadcommunity", service.LoadCommunity)
 	//添加群
 	r.POST("/contact/joinGroup", service.JoinGroups)
-	//前端发过来的消息再receProc里面处理
-	//r.POST("/user/redisMsg", service.RedisMsg)
 	return r
 }

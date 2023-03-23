@@ -65,14 +65,12 @@ func LoadCommunity(ownerId uint) ([]*Community, string) {
 	for _, v := range data {
 		fmt.Println(v)
 	}
-	//utils.DB.Where()
 	return data, "查询成功"
 }
 
 func JoinGroup(userId uint, comId string) (int, string) {
 	contact := Contact{}
 	contact.OwnerId = userId
-	//contact.TargetId = comId
 	contact.Type = 2
 	community := Community{}
 

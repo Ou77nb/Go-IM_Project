@@ -208,7 +208,6 @@ func CreateCommunity(c *gin.Context) {
 // LoadCommunity 加载群列表
 func LoadCommunity(c *gin.Context) {
 	ownerId, _ := strconv.Atoi(c.Request.FormValue("ownerId"))
-	//	name := c.Request.FormValue("name")
 	data, msg := models.LoadCommunity(uint(ownerId))
 	if len(data) != 0 {
 		utils.RespList(c.Writer, 0, data, msg)
@@ -221,8 +220,6 @@ func LoadCommunity(c *gin.Context) {
 func JoinGroups(c *gin.Context) {
 	userId, _ := strconv.Atoi(c.Request.FormValue("userId"))
 	comId := c.Request.FormValue("comId")
-
-	//	name := c.Request.FormValue("name")
 	data, msg := models.JoinGroup(uint(userId), comId)
 	if data == 0 {
 		utils.RespOK(c.Writer, data, msg)
@@ -234,17 +231,16 @@ func JoinGroups(c *gin.Context) {
 func FindByID(c *gin.Context) {
 	userId, _ := strconv.Atoi(c.Request.FormValue("userId"))
 
-	//	name := c.Request.FormValue("name")
 	data := models.FindByID(uint(userId))
 	utils.RespOK(c.Writer, data, "ok")
 }
 
-//func RedisMsg(c *gin.Context) {
-//	userIdA, _ := strconv.Atoi(c.PostForm("userIdA"))
-//	userIdB, _ := strconv.Atoi(c.PostForm("userIdB"))
-//	start, _ := strconv.Atoi(c.PostForm("start"))
-//	end, _ := strconv.Atoi(c.PostForm("end"))
-//	isRev, _ := strconv.ParseBool(c.PostForm("isRev"))
-//	res := models.RedisMsg(int64(userIdA), int64(userIdB), int64(start), int64(end), isRev)
-//	utils.RespOKList(c.Writer, "ok", res)
-//}
+func RedisMsg(c *gin.Context) {
+	userIdA, _ := strconv.Atoi(c.PostForm("userIdA"))
+	userIdB, _ := strconv.Atoi(c.PostForm("userIdB"))
+	start, _ := strconv.Atoi(c.PostForm("start"))
+	end, _ := strconv.Atoi(c.PostForm("end"))
+	isRev, _ := strconv.ParseBool(c.PostForm("isRev"))
+	res := models.RedisMsg(int64(userIdA), int64(userIdB), int64(start), int64(end), isRev)
+	utils.RespOKList(c.Writer, "ok", res)
+}
