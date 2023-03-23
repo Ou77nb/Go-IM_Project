@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/go-redis/redis/v8"
 	"github.com/gorilla/websocket"
+	"github.com/spf13/viper"
 	"gopkg.in/fatih/set.v0"
 	"gorm.io/gorm"
 	"net"
@@ -139,7 +140,7 @@ func init() {
 func udpSendProc() {
 	con, err := net.DialUDP("udp", nil, &net.UDPAddr{
 		IP:   net.IPv4(192, 168, 0, 255),
-		Port: 3000,
+		Port: viper.GetInt("port.udp"),
 	})
 	defer con.Close()
 	if err != nil {
@@ -165,7 +166,7 @@ func udpSendProc() {
 func udpReceiveProc() {
 	con, err := net.ListenUDP("udp", &net.UDPAddr{
 		IP:   net.IPv4zero,
-		Port: 3000,
+		Port: viper.GetInt("port.udp"),
 	})
 	if err != nil {
 		fmt.Println("message.go 165:", err)
@@ -257,7 +258,6 @@ func sendMsg(userId int64, msg []byte) {
 	}
 	score := float64(cap(res)) + 1
 	ress, e := utils.Red.ZAdd(ctx, key, &redis.Z{score, msg}).Result() //jsonMsg
-	//res, e := utils.Red.Do(ctx, "zadd", key, 1, jsonMsg).Result() //备用 后续拓展 记录完整msg
 	if e != nil {
 		fmt.Println(e)
 	}
@@ -267,10 +267,7 @@ func sendMsg(userId int64, msg []byte) {
 // RedisMsg 获取缓存里面的消息
 func RedisMsg(userIdA int64, userIdB int64, start int64, end int64, isRev bool) []string {
 	rwLocker.RLock()
-	//node, ok := clientMap[userIdA]
 	rwLocker.RUnlock()
-	//jsonMsg := Message{}
-	//json.Unmarshal(msg, &jsonMsg)
 	ctx := context.Background()
 	userIdStr := strconv.Itoa(int(userIdA))
 	targetIdStr := strconv.Itoa(int(userIdB))
@@ -280,9 +277,6 @@ func RedisMsg(userIdA int64, userIdB int64, start int64, end int64, isRev bool) 
 	} else {
 		key = "msg_" + userIdStr + "_" + targetIdStr
 	}
-	//key = "msg_" + userIdStr + "_" + targetIdStr
-	//rels, err := utils.Red.ZRevRange(ctx, key, 0, 10).Result()  //根据score倒叙
-
 	var rels []string
 	var err error
 	if isRev {
@@ -293,12 +287,5 @@ func RedisMsg(userIdA int64, userIdB int64, start int64, end int64, isRev bool) 
 	if err != nil {
 		fmt.Println(err) //没有找到
 	}
-	// 发送推送消息
-	/**
-	// 后台通过websoket 推送消息
-	for _, val := range rels {
-		fmt.Println("sendMsg >>> userID: ", userIdA, "  msg:", val)
-		node.DataQueue <- []byte(val)
-	}**/
 	return rels
 }

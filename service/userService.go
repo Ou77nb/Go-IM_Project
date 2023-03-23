@@ -208,7 +208,6 @@ func CreateCommunity(c *gin.Context) {
 // LoadCommunity 加载群列表
 func LoadCommunity(c *gin.Context) {
 	ownerId, _ := strconv.Atoi(c.Request.FormValue("ownerId"))
-	//	name := c.Request.FormValue("name")
 	data, msg := models.LoadCommunity(uint(ownerId))
 	if len(data) != 0 {
 		utils.RespList(c.Writer, 0, data, msg)
@@ -221,8 +220,6 @@ func LoadCommunity(c *gin.Context) {
 func JoinGroups(c *gin.Context) {
 	userId, _ := strconv.Atoi(c.Request.FormValue("userId"))
 	comId := c.Request.FormValue("comId")
-
-	//	name := c.Request.FormValue("name")
 	data, msg := models.JoinGroup(uint(userId), comId)
 	if data == 0 {
 		utils.RespOK(c.Writer, data, msg)
